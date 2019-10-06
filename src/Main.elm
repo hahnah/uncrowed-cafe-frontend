@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import Browser
-import Element exposing (Element, centerX, column, el, fill, layout, text, width)
+import Element exposing (Element, centerX, centerY, column, el, fill, height, layout, row, text, width, wrappedRow)
 import Element.Border as Border
 import Html exposing (Html)
 
@@ -75,6 +75,7 @@ view model =
     <|
         column
             [ width fill
+            , centerX
             ]
             [ viewTitle
             , viewLogo
@@ -133,13 +134,30 @@ viewSearchButton =
 
 viewSearchResult : Element Msg
 viewSearchResult =
-    el
-        [ width fill
-        , Border.width 1
+    wrappedRow
+        []
+        [ viewCafe
+        , viewCafe
+        , viewCafe
+        , viewCafe
+        , viewCafe
         ]
-    <|
-        el [ centerX ] <|
-            text "Search Result"
+
+
+viewCafe : Element Msg
+viewCafe =
+    row
+        [ Border.width 1 ]
+        [ text "Thumbnail"
+        , column
+            []
+            [ el [] <| text "Sample Cafe"
+            , el [] <| text "Congestion Rate : 50%"
+            , el [] <| text "Stars : ★★★★☆"
+            , el [] <| text "Distance : 100M"
+            , el [] <| text "View On Google Map"
+            ]
+        ]
 
 
 viewFooter : Element Msg
