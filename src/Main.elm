@@ -3,6 +3,7 @@ module Main exposing (main)
 import Browser
 import Element exposing (Element, centerX, centerY, column, el, fill, height, layout, row, text, width, wrappedRow)
 import Element.Border as Border
+import Element.Input as Input
 import Html exposing (Html)
 
 
@@ -40,7 +41,7 @@ init _ =
 
 
 type Msg
-    = Temp
+    = ClickSearchButton
 
 
 
@@ -129,7 +130,14 @@ viewSearchButton =
         ]
     <|
         el [ centerX ] <|
-            text "Searching Button"
+            Input.button
+                [ Border.width 1
+                , Border.rounded 15
+                , Element.paddingXY 10 4
+                ]
+                { onPress = Just ClickSearchButton
+                , label = text "Search Cafes Near You"
+                }
 
 
 viewSearchResult : Element Msg
