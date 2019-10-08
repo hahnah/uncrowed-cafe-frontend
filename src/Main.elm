@@ -1,10 +1,11 @@
-module Main exposing (main)
+port module Main exposing (main)
 
 import Browser
 import Element exposing (Element, centerX, centerY, column, el, fill, height, layout, row, text, width, wrappedRow)
 import Element.Border as Border
 import Element.Input as Input
 import Html exposing (Html)
+import Json.Decode as Decode exposing (Decoder)
 
 
 
@@ -26,14 +27,20 @@ main =
 
 
 type alias Model =
-    String
+    { location : Maybe Location }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( ""
+    ( { location = Nothing }
     , Cmd.none
     )
+
+
+type alias Location =
+    { latitude : Float
+    , longitude : Float
+    }
 
 
 
@@ -42,6 +49,7 @@ init _ =
 
 type Msg
     = ClickSearchButton
+    | GetLocation String
 
 
 
@@ -50,7 +58,10 @@ type Msg
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.none
+    receiveLocation GetLocation
+
+
+port receiveLocation : (String -> msg) -> Sub msg
 
 
 
@@ -59,9 +70,36 @@ subscriptions _ =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model
-    , Cmd.none
-    )
+    case msg of
+        ClickSearchButton ->
+            ( model, requestLocation () )
+
+        GetLocation jsonString ->
+            let
+                decodedLocation : Result Decode.Error Location
+                decodedLocation =
+                    Decode.decodeString locationDecoder jsonString
+
+                maybeLocation : Maybe Location
+                maybeLocation =
+                    case decodedLocation of
+                        Ok location_ ->
+                            Just location_
+
+                        Err _ ->
+                            Nothing
+            in
+            ( { model | location = maybeLocation }, Cmd.none )
+
+
+port requestLocation : () -> Cmd msg
+
+
+locationDecoder : Decoder Location
+locationDecoder =
+    Decode.map2 Location
+        (Decode.at [ "location", "latitude" ] Decode.float)
+        (Decode.at [ "location", "longitude" ] Decode.float)
 
 
 
