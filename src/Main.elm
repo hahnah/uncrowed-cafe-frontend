@@ -1,7 +1,7 @@
 port module Main exposing (main)
 
 import Browser
-import Element exposing (Element, centerX, centerY, column, el, fill, height, layout, row, text, width, wrappedRow)
+import Element exposing (Element, centerX, centerY, column, el, fill, height, layout, padding, row, text, width, wrappedRow)
 import Element.Border as Border
 import Element.Input as Input
 import Html exposing (Html)
@@ -116,77 +116,99 @@ view model =
             [ width fill
             , centerX
             ]
-            [ viewTitle
-            , viewLogo
-            , viewDescription
-            , viewSearchButton
-            , viewSearchResult
-            , viewFooter
+            [ el
+                [ width fill
+                , centerX
+                , centerY
+                , padding 30
+                , Border.width 1
+                ]
+                viewTitle
+            , el
+                [ width fill
+                , centerX
+                , centerY
+                , padding 30
+                , Border.width 1
+                ]
+                viewLogo
+            , el
+                [ width fill
+                , centerX
+                , centerY
+                , padding 30
+                , Border.width 1
+                ]
+                viewDescription
+            , el
+                [ width fill
+                , centerX
+                , centerY
+                , padding 30
+                , Border.width 1
+                ]
+                viewSearchButton
+            , el
+                [ width fill
+                , centerX
+                , centerY
+                , padding 30
+                , Border.width 1
+                ]
+                viewSearchResult
+            , el
+                [ width fill
+                , centerX
+                , centerY
+                , padding 4
+                , Border.width 1
+                ]
+                viewFooter
             ]
 
 
 viewTitle : Element Msg
 viewTitle =
-    el
-        [ width fill
-        , Border.width 1
-        ]
-    <|
-        el [ centerX ] <|
-            text "Title"
+    el [ centerX ] <|
+        text "Title"
 
 
 viewLogo : Element Msg
 viewLogo =
     el
-        [ width fill
-        , Border.width 1
-        ]
+        [ centerX ]
     <|
-        el
-            [ centerX ]
-        <|
-            text "Logo"
+        text "Logo"
 
 
 viewDescription : Element Msg
 viewDescription =
-    el
-        [ width fill
-        , Border.width 1
-        ]
-    <|
-        el [ centerX ] <|
-            text "Description"
+    el [ centerX ] <|
+        text "Description"
 
 
 viewSearchButton : Element Msg
 viewSearchButton =
-    el
-        [ width fill
-        , Border.width 1
-        ]
-    <|
-        el [ centerX ] <|
-            Input.button
-                [ Border.width 1
-                , Border.rounded 15
-                , Element.paddingXY 10 4
-                ]
-                { onPress = Just ClickSearchButton
-                , label = text "Search Cafes Near You"
-                }
+    el [ centerX ] <|
+        Input.button
+            [ Border.width 1
+            , Border.rounded 15
+            , Element.paddingXY 10 4
+            ]
+            { onPress = Just ClickSearchButton
+            , label = text "Search Cafes Near You"
+            }
 
 
 viewSearchResult : Element Msg
 viewSearchResult =
     wrappedRow
         []
-        [ viewCafe
-        , viewCafe
-        , viewCafe
-        , viewCafe
-        , viewCafe
+        [ el [ padding 10 ] viewCafe
+        , el [ padding 10 ] viewCafe
+        , el [ padding 10 ] viewCafe
+        , el [ padding 10 ] viewCafe
+        , el [ padding 10 ] viewCafe
         ]
 
 
@@ -208,10 +230,5 @@ viewCafe =
 
 viewFooter : Element Msg
 viewFooter =
-    el
-        [ width fill
-        , Border.width 1
-        ]
-    <|
-        el [ centerX ] <|
-            text "Footer"
+    el [ centerX ] <|
+        text "Footer"
