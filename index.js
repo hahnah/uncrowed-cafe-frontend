@@ -33,7 +33,7 @@ app.ports.requestLocation.subscribe(() => {
   const options = {
     enableHighAccuracy: false,
     maximumAge: 0,
-    timeout: 3000
+    timeout: 10000
   };
 
   navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
