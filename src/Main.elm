@@ -324,7 +324,18 @@ viewCafe : Cafe -> Element Msg
 viewCafe cafe =
     row
         [ Border.width 1 ]
-        [ text "Thumbnail"
+        [ el
+            [ Border.width 1
+            , width fill
+            , height fill
+            ]
+          <|
+            el
+                [ centerX
+                , centerY
+                ]
+            <|
+                text "Thumbnail"
         , column
             []
             [ el [] <| text cafe.name
