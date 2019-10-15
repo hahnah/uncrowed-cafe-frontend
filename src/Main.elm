@@ -52,7 +52,7 @@ type alias Location =
 
 type alias SearchResult =
     { status : String
-    , searchResult : List Cafe
+    , cafes : List Cafe
     }
 
 
@@ -317,7 +317,7 @@ viewSearchResult searchResult =
     wrappedRow
         []
     <|
-        List.map (el [ padding 10 ] << viewCafe) searchResult.searchResult
+        List.map (el [ padding 10 ] << viewCafe) searchResult.cafes
 
 
 viewCafe : Cafe -> Element Msg
