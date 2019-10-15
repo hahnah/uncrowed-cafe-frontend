@@ -266,7 +266,8 @@ view model =
                 , padding 30
                 , Border.width 1
                 ]
-                viewSearchResult
+              <|
+                viewSearchResult model.searchResult
             , el
                 [ width fill
                 , centerX
@@ -311,28 +312,24 @@ viewSearchButton =
             }
 
 
-viewSearchResult : Element Msg
-viewSearchResult =
+viewSearchResult : SearchResult -> Element Msg
+viewSearchResult searchResult =
     wrappedRow
         []
-        [ el [ padding 10 ] viewCafe
-        , el [ padding 10 ] viewCafe
-        , el [ padding 10 ] viewCafe
-        , el [ padding 10 ] viewCafe
-        , el [ padding 10 ] viewCafe
-        ]
+    <|
+        List.map (el [ padding 10 ] << viewCafe) searchResult.searchResult
 
 
-viewCafe : Element Msg
-viewCafe =
+viewCafe : Cafe -> Element Msg
+viewCafe cafe =
     row
         [ Border.width 1 ]
         [ text "Thumbnail"
         , column
             []
-            [ el [] <| text "Sample Cafe"
-            , el [] <| text "Congestion Rate : 50%"
-            , el [] <| text "Stars : ★★★★☆"
+            [ el [] <| text cafe.name
+            , el [] <| text <| String.concat [ "Congestion Rate : ", String.fromInt cafe.congestionPercentage, "%" ]
+            , el [] <| text <| String.concat [ "Stars : ", String.fromFloat cafe.rating ]
             , el [] <| text "Distance : 100M"
             , el [] <| text "View On Google Map"
             ]
