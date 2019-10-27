@@ -4,3 +4,5 @@ elm-stuff
 repl-temp-*
 # elm-make generated fiels
 main.js
+# node modules
+node_modules
