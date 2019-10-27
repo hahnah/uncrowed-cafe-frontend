@@ -308,7 +308,7 @@ viewSearchButton =
             , Element.paddingXY 10 4
             ]
             { onPress = Just ClickSearchButton
-            , label = text "Search Cafes Near You"
+            , label = text "Search Cafes"
             }
 
 
@@ -322,28 +322,41 @@ viewSearchResult searchResult =
 
 viewCafe : Cafe -> Element Msg
 viewCafe cafe =
-    row
-        [ Border.width 1 ]
-        [ el
-            [ Border.width 1
-            , width fill
-            , height fill
-            ]
-          <|
-            el
-                [ centerX
-                , centerY
+    column
+        []
+        [ row
+            [ Border.width 1 ]
+            [ el
+                [ Border.width 1
+                , width fill
+                , height fill
                 ]
-            <|
-                text "Thumbnail"
-        , column
-            []
-            [ el [] <| text cafe.name
-            , el [] <| text <| String.concat [ "Congestion Rate : ", String.fromInt cafe.congestionPercentage, "%" ]
-            , el [] <| text <| String.concat [ "Stars : ", String.fromFloat cafe.rating ]
-            , el [] <| text "Distance : 100M"
-            , el [] <| text "View On Google Map"
+              <|
+                el
+                    [ centerX
+                    , centerY
+                    ]
+                <|
+                    text "Thumbnail"
+            , column
+                []
+                [ el [] <| text cafe.name
+                , el [] <| text <| String.concat [ "Congestion Rate : ", String.fromInt cafe.congestionPercentage, "%" ]
+                , el [] <| text <| String.concat [ "Stars : ", String.fromFloat cafe.rating ]
+                , el [] <| text "Distance : ???M"
+                ]
             ]
+        , el
+            [ width fill ] <|
+            Input.button
+                [ width fill
+                , Border.width 1
+                , Border.rounded 15
+                , Element.paddingXY 10 4
+                ]
+                { onPress = Nothing
+                , label = el [ centerX ] <|text "View on Google Maps"
+                }
         ]
 
 
